@@ -27,7 +27,7 @@ export default {
                 <h5 class="card-title">Consulta Servicios</h5>
                 <p class="card-text">Consulta todos nuestros servicios.</p>
                 <div class="boton">
-                    <div class="btn btn-primary" to="/servicio">Servicios Disponibles</div>
+                    <router-link class="btn btn-primary" to="/servicio">Servicios Disponibles</router-link>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@ export default {
                 <p class="card-text">Realice las búsquedas del servicio de interpretación que más se ajuste a sus
                     necesidades</p>
                 <div class="boton">
-                    <div class="btn btn-primary" >Búsqueda</div>
+                    <router-link class="btn btn-primary" to="/busqueda">Búsqueda</router-link>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@ export default {
                 <h5 class="card-title">Ayuda</h5>
                 <p class="card-text">Preguntas y respuestas más frencuentes.</p>
                 <div class="boton">
-                    <div class="btn btn-primary" >Ayuda</div>
+                    <router-link class="btn btn-primary" to="/ayuda">Ayuda</router-link>
                 </div>
             </div>
         </div>

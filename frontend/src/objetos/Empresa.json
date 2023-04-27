@@ -1,0 +1,94 @@
+{
+  "_embedded": {
+    "empresa": [
+      {
+        "id": 1,
+        "nombre": "Alfresco",
+        "direccion": "C/ Valcarnero 17, Madrid",
+        "telefono": "+34 666333555",
+        "email": "alfresco@gmail.com",
+        "servicios": [
+          {
+            "id": 1,
+            "tipo": "interpretacion",
+            "idioma": "ingles",
+            "horarioInicio": "10:00",
+            "horarioFin": "23:00",
+            "provincia": "Zaragoza",
+            "servicioOnline": true
+          },
+          {
+            "id": 1,
+            "tipo": "traduccion",
+            "idioma": "ingles",
+            "tipoDocumento": "Carta",
+            "tiempoEntrega": "1 mes",
+            "traduccionJurada": true
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "nombre": "Interlingua",
+        "direccion": "C/ Las fuentes s/n, Benicarló",
+        "telefono": "+34 654231311",
+        "email": "interlingua@gmail.com",
+        "servicios": [
+          {
+            "id": 3,
+            "tipo": "interpretacion",
+            "idioma": "frances",
+            "horarioInicio": "09:00",
+            "horarioFin": "24:00",
+            "provincia": "Teruel",
+            "servicioOnline": false
+          },
+
+          {
+            "id": 2,
+            "tipo": "traduccion",
+            "idioma": "frances",
+            "tipoDocumento": "Documento Oficial",
+            "tiempoEntrega": "2 semanas",
+            "traduccionJurada": true
+          },
+          {
+            "id": 3,
+            "tipo": "traduccion",
+            "idioma": "frances",
+            "tipoDocumento": "Documento Oficial",
+            "tiempoEntrega": "2 semanas",
+            "traduccionJurada": false
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "nombre": "Traductin",
+        "direccion": "Av Valencia",
+        "telefono": "+34 689002345",
+        "email": "traductin@gmail.com",
+        "servicios": [
+          {
+            "id": 2,
+            "tipo": "interpretacion",
+            "idioma": "ingles",
+            "horarioInicio": "11:00",
+            "horarioFin": "22:00",
+            "provincia": "Leon",
+            "servicioOnline": false
+          },
+          {
+            "id": 4,
+            "tipo": "interpretacion",
+            "idioma": "Polaco",
+            "horarioInicio": "09:00",
+            "horarioFin": "22:00",
+            "provincia": "Vitoria",
+            "servicioOnline": false
+          }
+        ]
+      }
+    ]
+  }
+}

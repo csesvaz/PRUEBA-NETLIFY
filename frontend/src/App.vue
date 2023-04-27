@@ -1,14 +1,16 @@
 <script>
-import InterfazInicio from './Interfaces/InterfazInicio.vue';
-export default {
-  components: { InterfazInicio },
+import {useEmpresaStore} from './stores/EmpresaStore.js';
+export default { 
+ 
+  beforeMount(){  
+   useEmpresaStore().fetchEmpresas() ;
+  }
 };
 </script>
 
 <template>
-  <InterfazInicio />
+  <router-view></router-view>
 </template>
 
 <style scoped>
-
 </style>
