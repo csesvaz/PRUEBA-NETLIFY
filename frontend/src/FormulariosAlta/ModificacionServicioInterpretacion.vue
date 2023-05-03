@@ -1,50 +1,35 @@
 <script>
 import Calendar from "primevue/calendar";
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions  } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
 
 import BarraNavegacion from "../components/BarraNavegacion.vue";
 export default {
   components: { BarraNavegacion, Calendar },
   computed: {
-    ...mapState(useEmpresaStore, ["servicios"]),
+    ...mapState(useEmpresaStore, ["empresas"]),
   },
   data() {
     return {
       tiempoInicio: null,
       tiempoFinal: null,
-      servicio: {
-        tipo: "interpretacion",
-        idioma: "0",
-        horarioInicio: "",
-        horarioFin: "",
-        provincia: "0",
-        servicioOnline: null,
-      },
+      id: 0, 
+      servicio: null,
       empresa: {
-        nombre: "0",
+        nombre: ""
       },
     };
   },
+  
+  beforeMount() {
+    this.id = this.$route.params.id;
+    this.servicio = this.getServicio(this.id);
+    this.empresa.nombre= this.getEmpresas().find((emp) => emp.servicios.some((ser) => ser.id == this.servicio.id)).nombre
+     
+  },
   methods: {
-    ...mapActions(useEmpresaStore, ["addServicio", "getEmpresas"]),
-    getEmpresa: function () {
-      return this.empresas[this.id];
-    },
-    formatearHora(hora) {
-      const hora1 = hora.getHours();
-      const minutos = hora.getMinutes();
-      return `${hora1.toString().padStart(2, "0")}:${minutos
-        .toString()
-        .padStart(2, "0")}`;
-    },
-    guardarServicio() {
-      this.servicio.tipo = "interpretacion";
-      this.servicio.horarioInicio = this.formatearHora(this.servicio.horarioInicio);
-      this.servicio.horarioFin = this.formatearHora(this.servicio.horarioFin);
-      this.addServicio(this.servicio, this.empresa.nombre);
-      this.$router.push("/interfazGestionServicios");
-    },
+    ...mapActions(useEmpresaStore, ["updateServicio","getEmpresas","getServicio"]),
+    
     borrarDatos() {
       this.empresa.nombre = "0";
       this.servicio = {
@@ -54,9 +39,12 @@ export default {
         horarioFin: "",
         provincia: "0",
         servicioOnline: null,
-      };
-    },
-  },
+      }},
+    modificarServicio() {
+      this.updateServicio(this.servicio);
+      this.$router.push('/interfazGestionServicios');
+
+  },}
 };
 </script>
 <template>
@@ -67,9 +55,9 @@ export default {
 
     <div class="row justify-content inicial">
       <h3 class="formulario inicial">
-        Formulario de Alta de un Servicio de Interpretación
+        Formulario de Modificación de un Servicio de Interpretación
       </h3>
-      <form @submit.prevent="guardarServicio">
+      <form @submit.prevent="modificarServicio">
         <div class="row inicial">
           <div class="col-md-11">
             <div class="text-left">
@@ -272,9 +260,9 @@ export default {
           <div class="row justify-content-center final">
             <div class="col-md-2">
               <button
-                type="button"
+                type ="submit"
                 class="btn btn-primary"
-                @click="guardarServicio"
+
               >
                 Guardar Cambios
               </button>
@@ -294,7 +282,7 @@ export default {
             <div class="col-md-6"></div>
           </div>
         </div>
-      </form>
+    </form>
     </div>
   </div>
 </template>

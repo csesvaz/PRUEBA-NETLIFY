@@ -124,4 +124,9 @@ export default {
 .text-align-center {
   text-align: center;
 }
+@media (max-width: 576px) {
+  .col-6 {
+    width: 100%;
+  }
+}
 </style>

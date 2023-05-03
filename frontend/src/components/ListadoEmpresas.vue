@@ -1,73 +1,68 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
 export default {
   computed: {
     ...mapState(useEmpresaStore, ["empresas"]),
   },
   methods: {
+    ...mapActions(useEmpresaStore, ["deleteEmpresa"]),
+    
     eliminarEmpresa(id) {
-      useEmpresaStore().deleteEmpresa(id);
+      this.deleteEmpresa(id);
     },
   },
 };
-</script>
-<template>
+</script><template>
   <h3>Listado de todas las empresas disponibles</h3>
-  <div class="row mb-12">
-    <span class="col-2 pt-3 pb-3 bg-primary border border-dark"
-      >Nombre de la Empresa</span
-    >
-    <span class="col-3 bg-primary border border-dark">Dirección</span>
-    <span class="col-2 bg-primary border border-dark">Teléfono </span>
-    <span class="col-3 bg-primary border border-dark">Email </span>
-  </div>
-  <!-- Aqui va un v-for de llas Empresas-->
-  <div v-for="empresa in empresas" :key="empresa.id" class="row mb-12">
-    <span class="col-2 bg-ligth border border-dark">{{ empresa.nombre }}</span>
-    <span class="col-3 bg-ligth border border-dark">{{
-      empresa.direccion
-    }}</span>
-    <span class="col-2 bg-ligth border border-dark">{{
-      empresa.telefono
-    }}</span>
-    <span class="col-3 bg-ligth border border-dark">{{ empresa.email }}</span>
-    <span class="col-1 bg-ligth">
-      <router-link :to="{name:'modificacionEmpresa',params:{id:empresa.id}}">
-        <fa
-          class="lapiz"
-          icon="fa-solid fa-pencil"
-          size="2xl"
-          /></router-link
-    ></span>
-    <span class="col-1 bg-ligth">
-      <fa
-        class="bin"
-        icon="fa-solid fa-trash-arrow-up"
-        size="2xl"
-        style="color: #c01c28" @click="eliminarEmpresa(empresa.id)"
-    /></span>
+  <div class="table-responsive ">
+    <table class="table table-bordered table-hover border border-dark ">
+      <thead class="thead-dark bg-primary ">
+        <tr>
+          <th class="text-center">Nombre de la Empresa</th>
+          <th class="text-center">Dirección</th>
+          <th class="text-center">Teléfono</th>
+          <th class="text-center">Email</th>
+          <th class="text-center">Editar</th>
+          <th class="text-center">Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="empresa in empresas" :key="empresa.id">
+          <td class="text-center">{{ empresa.nombre }}</td>
+          <td class="text-center">{{ empresa.direccion }}</td>
+          <td class="text-center">{{ empresa.telefono }}</td>
+          <td class="text-center">{{ empresa.email }}</td>
+          <td class="text-center">
+            <router-link :to="{name:'modificacionEmpresa',params:{id:empresa.id}}">
+              <fa class="lapiz" icon="fa-solid fa-pencil-alt" size="lg" />
+            </router-link>
+          </td>
+          <td class="text-center">
+            <fa
+              class="bin"
+              icon="fa-solid fa-trash-alt"
+              size="lg"
+              style="color: #c01c28"
+              @click="eliminarEmpresa(empresa.id)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <style scoped>
 .lapiz {
   color: rgb(110, 60, 60);
-  padding-right: 3vw;
+  padding-right: 1em;
   margin-top: 1vh;
 }
 
-span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .bin {
-  margin-right: 12vw;
+  margin-right: 1em;
   margin-top: 1vh;
   cursor: pointer;
-}
-.iconoOrdenar {
-  padding-left: 0.5em;
 }
 </style>

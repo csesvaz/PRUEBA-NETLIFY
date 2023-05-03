@@ -20,7 +20,7 @@
           <router-link class="nav-link" to="/busqueda">Búsqueda</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/alta">Altas</router-link>
+          <router-link class="nav-link" to="/alta">Gestión</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/ayuda">Ayuda</router-link>

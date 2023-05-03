@@ -1,14 +1,10 @@
 <script>
+import { mapActions } from "pinia";
+import { useEmpresaStore } from "../stores/EmpresaStore";
 export default {
   props: ["empresa"],
   methods: {
-    convertirBooleano(a) {
-      if (a) {
-        return "Sí";
-      } else {
-        return "No";
-      }
-    },
+    ...mapActions(useEmpresaStore, ["convertirBooleano"]),
   },
 };
 </script>
@@ -36,7 +32,7 @@ export default {
     </div>
     <div class="row mb-3">
       <div class="col-md-12">
-        <h3>SERVICIOS#</h3>
+        <h5>SERVICIOS</h5>
         <div class="row mt-3">
           <span class="col-1"></span>
           <div class="col-md-6">
@@ -115,8 +111,9 @@ export default {
 
 <style scoped>
 .fondo {
-  background-color: #c2bdbd;
+  background-color:cyan;
   margin-left: 1em;
   margin-right: 20em;
+  border: 1px solid black;
 }
 </style>

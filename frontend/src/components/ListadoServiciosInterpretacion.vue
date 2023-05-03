@@ -3,24 +3,33 @@ import { mapActions, mapState } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
 export default {
   computed: {
-    ...mapState(useEmpresaStore, ["empresas"]),
-    empresasFiltradas() {
-      return this.empresas.filter(
-        (empresa) =>
-          empresa.nombre
-            .toLowerCase()
-            .includes(this.filtrarServicio.toLowerCase())
-        // ||
-        // empresa.servicios.some((servicio) =>
-        //   servicio.idioma.includes(this.filtrarServicio)
-      );
+    ...mapState(useEmpresaStore, ["empresas","servicios"]),
+    // empresasFiltradas() {
+    //   return this.empresas.filter(
+    //     (empresa) =>
+    //       empresa.nombre
+    //         .toLowerCase()
+    //         .includes(this.filtrarServicio.toLowerCase())
+    //   );
+    // },
+    
+    // provinciasFiltradas() {
+    //   return this.empresas.filter(
+    //     empresa.servicios.some((servicio) =>
+    //     servicios.idioma.
+    //         toLowerCase()
+    //         .includes(this.filtrarIdioma.toLowerCase())
+    //   ))
+    // },
+  },
+  // props: ["filtrarServicio"],
+  methods: {
+    ...mapActions(useEmpresaStore, ["convertirBooleano","deleteServicio"]),
+    eliminarServicio(id) {
+      this.deleteServicio(id);
     },
   },
-  props: ["filtrarServicio"],
-  methods: {
-    ...mapActions(useEmpresaStore, ["convertirBooleano"]),
-  },
-};
+ }
 </script>
 <template>
   <div class="container-fluid mt-4">
@@ -40,7 +49,7 @@ export default {
     </div>
     <!-- Aqui va un v-for de los servicios de Interpretacion-->
 
-    <div v-for="empresa in empresasFiltradas" :key="empresa.id">
+    <div v-for="empresa in empresas" :key="empresa.id">
       <div v-for="servicio in empresa.servicios" :key="servicio.id">
         <div v-if="servicio.tipo == 'interpretacion'" class="row mb-12">
           <span class="col-2 bg-ligth border border-dark">{{
@@ -65,7 +74,7 @@ export default {
             v-if="$route.path === '/interfazGestionServicios'"
             class="col-1 mt-2"
           >
-            <router-link to="/altaServicioTraduccion">
+          <router-link :to="{name:'modificacionServicioInterpretacion',params:{id:servicio.id}}">
               <fa class="lapiz" icon="fa-solid fa-pencil" size="2xl" />
             </router-link>
             <fa
@@ -73,6 +82,7 @@ export default {
               icon="fa-solid fa-trash-arrow-up"
               size="2xl"
               style="color: #c01c28"
+              @click="eliminarServicio(servicio.id)"
             />
           </span>
         </div>
@@ -93,7 +103,11 @@ span {
   align-items: center;
   overflow: hidden;
 }
-
+.bin {
+  margin-right: 12vw;
+  margin-top: 1vh;
+  cursor: pointer;
+}
 .col-2 {
   width: 17%;
 }

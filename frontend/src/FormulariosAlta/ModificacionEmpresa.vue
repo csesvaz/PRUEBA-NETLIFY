@@ -1,6 +1,7 @@
 <script>
 
 import BarraNavegacion from "../components/BarraNavegacion.vue";
+import { mapActions } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore.js";
 
 export default {
@@ -10,17 +11,17 @@ export default {
   },
   beforeMount() {
     this.id = this.$route.params.id;
-    this.empresa = useEmpresaStore().getEmpresa(this.id);
+    this.empresa = this.getEmpresa(this.id);
   
   },
   methods: {
+    ...mapActions(useEmpresaStore, ["updateEmpresa","getEmpresa"]),
     borrarDatos() { 
       this.empresa = {nombre:"",direccion:"",telefono:"",email:""};
      
     },
     modificarEmpresa() {
-      console.log("Bien");
-      useEmpresaStore().updateEmpresa(this.empresa);
+      this.updateEmpresa(this.empresa);
       this.$router.push('/interfazGestionEmpresa');
 
   },}

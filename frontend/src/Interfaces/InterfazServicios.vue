@@ -2,24 +2,27 @@
 import BarraNavegacion from "../components/BarraNavegacion.vue";
 import ListadoServiciosInterpretacion from "../components/ListadoServiciosInterpretacion.vue";
 import ListadoServiciosTraduccion from "../components/ListadoServiciosTraduccion.vue";
+import { mapState, mapActions } from "pinia";
+import { useEmpresaStore } from "../stores/EmpresaStore";
 export default {
   components: {
     BarraNavegacion,
     ListadoServiciosInterpretacion,
     ListadoServiciosTraduccion,
   },
+  computed: {
+    ...mapState(useEmpresaStore, ["opcionInicial"]),
+  },
   data() {
     return {
-      opcionInicial: true,
       filtro: "",
     };
   },
   methods: {
-    cambioOpcion() {
-      this.opcionInicial = !this.opcionInicial;
-    },
+    ...mapActions(useEmpresaStore, ["cambioOpcion"]),
+
     filtrar() {
-      this.filtro=this.$refs.busqueda.value;
+      this.filtro = this.$refs.busquedaEmpresa.value;
     },
   },
 };
@@ -66,24 +69,30 @@ export default {
     </div>
     <br />
     <div class="row mb-12">
-      <div class="col-2"></div>
-      <span class="col-4 busqueda"><form class="d-flex" role="search" @submit.prevent="filtrar">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Busqueda de una empresa."
-          aria-label="search"
-          ref="busqueda"
-        />
-        <button class="btn btn-outline-info bg-primary btnBusqueda" type="submit">Buscar</button>
-      </form>
-    </span>
+      <div class="col-1"></div>
+      <span class="col-4 busqueda"
+        ><form class="d-flex" role="search" @submit.prevent="filtrar">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Busqueda por empresa."
+            aria-label="search"
+            ref="busquedaEmpresa"
+          />
+          <button
+            class="btn btn-outline-info bg-primary btn Busqueda"
+            type="submit"
+          >
+            Buscar
+          </button>
+        </form>
+      </span>
     </div>
     <div v-if="this.opcionInicial">
-      <ListadoServiciosInterpretacion :filtrarServicio="filtro"/>
+      <ListadoServiciosInterpretacion :filtrarServicio="filtro" />
     </div>
     <div v-else>
-      <ListadoServiciosTraduccion :filtrarServicio="filtro"/>
+      <ListadoServiciosTraduccion :filtrarServicio="filtro" />
     </div>
   </div>
 </template>
@@ -104,7 +113,7 @@ export default {
   .busqueda {
     margin-left: 2vw;
   }
-  
+
   span.col-4 {
     width: 80%;
   }
