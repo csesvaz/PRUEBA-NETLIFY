@@ -6,9 +6,21 @@ class empresaService {
         return empresaData;
     }
 
-    create(empresa) {
+    crearEmpresa(empresa) {
+        const idsExistentes = empresaData.map(emp => emp.id); // Obtener todos los IDs existentes
+        let id = generarIDUnico(); // Generar un nuevo ID aleatorio
+      
+        // Comprobar si el nuevo ID generado ya está en uso
+        while (idsExistentes.includes(id)) {
+          id = generarIDUnico();
+        }
+      
+        // Asignar el ID único a la nueva empresa
+        empresa.id = id;
+      
+        // Agregar la empresa a la base de datos
         return push(empresaData, empresa);
-    }
+      }
 
     update(key, value) {
         return update(empresa(empresaData, key), value);
@@ -21,6 +33,7 @@ class empresaService {
     deleteAll() {
         return remove(empresaData)
     }
+    
 
     subscribeAll(callback) {
         onValue(empresaData, (snapshot) => {
@@ -48,6 +61,7 @@ class empresaService {
             }
         });
     }
+ 
 }
 
 export default new empresaService();

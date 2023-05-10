@@ -1,35 +1,31 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
+import ComponenteEmpresa from "./ComponenteEmpresa.vue";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 export default {
   computed: {
-    ...mapState(useEmpresaStore, ["empresas","servicios"]),
-    // empresasFiltradas() {
-    //   return this.empresas.filter(
-    //     (empresa) =>
-    //       empresa.nombre
-    //         .toLowerCase()
-    //         .includes(this.filtrarServicio.toLowerCase())
-    //   );
-    // },
-    
-    // provinciasFiltradas() {
-    //   return this.empresas.filter(
-    //     empresa.servicios.some((servicio) =>
-    //     servicios.idioma.
-    //         toLowerCase()
-    //         .includes(this.filtrarIdioma.toLowerCase())
-    //   ))
-    // },
+    ...mapState(useEmpresaStore, ["empresas", "servicios"]),
   },
-  // props: ["filtrarServicio"],
+  props: ["filtrarServicio"],
   methods: {
-    ...mapActions(useEmpresaStore, ["convertirBooleano","deleteServicio"]),
+    ...mapActions(useEmpresaStore, ["convertirBooleano", "deleteServicio"]),
     eliminarServicio(id) {
       this.deleteServicio(id);
     },
+    empresaSeleccionada(empresa) {
+      this.empresaSeleccion = empresa;
+    },
   },
- }
+  data() {
+    return {
+      visible: false,
+      empresaSeleccion: null,
+    };
+  },
+  components: { Button, Dialog, ComponenteEmpresa },
+};
 </script>
 <template>
   <div class="container-fluid mt-4">
@@ -41,8 +37,8 @@ export default {
       <span class="col-2 bg-primary border border-dark">Idioma </span>
       <span class="col-1 bg-primary border border-dark">Hora Inicio </span>
       <span class="col-1 bg-primary border border-dark">Hora Fin </span>
-      <span class="col-3 bg-primary border border-dark">Provincia </span>
-      <span class="col-2 bg-primary border border-dark">Servicio ONLINE </span>
+      <span class="col-2 bg-primary border border-dark">Provincia </span>
+      <span class="col-1 bg-primary border border-dark">Servicio ONLINE </span>
       <span v-if="$route.path === '/alta'" class="col-1 mt-3 lapiz h5"
         >Editar</span
       >
@@ -64,17 +60,36 @@ export default {
           <span class="col-1 bg-ligth border border-dark">{{
             servicio.horarioFin
           }}</span>
-          <span class="col-3 bg-ligth border border-dark">{{
+          <span class="col-2 bg-ligth border border-dark">{{
             servicio.provincia
           }}</span>
-          <span class="col-2 bg-ligth border border-dark">{{
+          <span class="col-1 bg-ligth border border-dark">{{
             convertirBooleano(servicio.servicioOnline)
           }}</span>
+          <span v-if="$route.path === '/servicio'" class="col-2 mt-2">
+            <Button label="Ver" icon="pi pi-eye" @click="visible = true, empresaSeleccionada(empresa)"/>
+
+            <Dialog
+              v-model:visible="visible"
+              modal
+              header="Dartos de la empresa"
+              :style="{ width: '50vw'}"
+              :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+            >
+              <ComponenteEmpresa :empresaEntrada="empresaSeleccion" />
+            </Dialog>
+          </span>
+
           <span
             v-if="$route.path === '/interfazGestionServicios'"
             class="col-1 mt-2"
           >
-          <router-link :to="{name:'modificacionServicioInterpretacion',params:{id:servicio.id}}">
+            <router-link
+              :to="{
+                name: 'modificacionServicioInterpretacion',
+                params: { id: servicio.id },
+              }"
+            >
               <fa class="lapiz" icon="fa-solid fa-pencil" size="2xl" />
             </router-link>
             <fa
@@ -104,34 +119,27 @@ span {
   overflow: hidden;
 }
 .bin {
-  margin-right: 12vw;
-  margin-top: 1vh;
+  margin-left: 1vw;
   cursor: pointer;
 }
 .col-2 {
   width: 17%;
+  text-align: center;
 }
 
 .col-1 {
   width: 10%;
-}
-
-.col-3 {
-  width: 25%;
+  text-align: center;
 }
 
 .lapiz {
   color: rgb(110, 60, 60);
-  padding-right: 0.5%;
-}
-.bin {
-  margin-right: 1%;
 }
 @media (max-width: 768px) {
   .container-fluid {
-  width: 100%;
-  margin-left: 2%;
-  font-size: 0.7rem;
-}
+    width: 100%;
+    margin-left: 2%;
+    font-size: 0.7rem;
+  }
 }
 </style>

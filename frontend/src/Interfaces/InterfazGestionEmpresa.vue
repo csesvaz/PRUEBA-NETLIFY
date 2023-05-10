@@ -9,7 +9,8 @@ export default {
 <template>
 <div class="d-block fixed-top">
   <BarraNavegacion />
-  <div class="row mb-12 mt-4 ms-3">
+</div>
+  <div class="row mb-12 mt-5 ms-3">
     <div class="col-sm-9 col-md-6">
       <h6 class="mb-0">Creación de nueva Empresa</h6>
     </div>
@@ -18,12 +19,15 @@ export default {
         Nueva Empresa
       </router-link>
     </div>
-  </div>
-  <div class="row mt-4 ms-4 me-3">
-    <ListadoEmpresas />
-  </div>
 </div>
+  <div class="row mt-4 ms-4 me-3 listado">
+    <ListadoEmpresas/>
+  </div>
+
 
 </template>
 
-<style scoped></style>
+<style scoped>
+.listado{
+  margin-top: 15vh;
+}</style>

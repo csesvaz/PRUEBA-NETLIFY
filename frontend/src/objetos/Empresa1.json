@@ -1,0 +1,26 @@
+{
+    "id": 1,
+    "nombre": "Alfresco",
+    "direccion": "C/ Valcarnero 17, Madrid",
+    "telefono": "+34 666333555",
+    "email": "alfresco@gmail.com",
+    "servicios": [
+      {
+        "id": 1,
+        "tipo": "interpretacion",
+        "idioma": "Inglés",
+        "horarioInicio": "10:00",
+        "horarioFin": "23:00",
+        "provincia": "Zaragoza",
+        "servicioOnline": true
+      },
+      {
+        "id": 2,
+        "tipo": "traduccion",
+        "idioma": "Inglés",
+        "tipoDocumento": "Carta",
+        "tiempoEntrega": "1 mes",
+        "traduccionJurada": true
+      }
+    ]
+  }

@@ -22,7 +22,8 @@
         <fa icon="fa-brands fa-linkedin"/>
         <fa icon="fa-brands fa-instagram" />
       </div>
-      <p>Contacto</p>
+      <p>Contacto: email apoyoTraucpol@mmmm.com o teléfono (+34 655-566778 Horario
+        telefónico de 9:00 a 15:00)</p>
           <p>© TRADUCPOL 2023. Todos los derechos reservados.</p>
         </div>
       </div>
@@ -32,6 +33,7 @@
 <style scoped>
 .socialMedia > * {
   margin-right: 1vw;
+  margin-bottom: 1vh;
 }
 
 </style>

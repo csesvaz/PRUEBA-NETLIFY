@@ -1,13 +1,32 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
+
+import ComponenteEmpresa from "./ComponenteEmpresa.vue";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 export default {
   computed: {
-    ...mapState(useEmpresaStore, ["empresas"]),
+    ...mapState(useEmpresaStore, ["empresas","servicios"]),
+    
   },
+  props: ["filtrarServicio"],
   methods: {
     ...mapActions(useEmpresaStore, ["convertirBooleano"]),
+  eliminarServicio(id) {
+      this.deleteServicio(id);
+    },
+    empresaSeleccionada(empresa) {
+      this.empresaSeleccion = empresa;
+    },
   },
+  data() {
+    return {
+      visible: false,
+      empresaSeleccion: null,
+    };
+  },
+  components: { Button, Dialog, ComponenteEmpresa },
 };
 </script>
 <template>
@@ -16,7 +35,7 @@ export default {
     <div class="row mb-12">
       <span class="col-2 pt-3 pb-3 bg-primary border border-dark">Empresa</span>
       <span class="col-2 bg-primary border border-dark">Idioma</span>
-      <span class="col-3 bg-primary border border-dark">Tipo de Documento</span>
+      <span class="col-2 bg-primary border border-dark">Tipo de Documento</span>
       <span class="col-2 bg-primary border border-dark">Plazo de Entrega</span>
       <span class="col-2 bg-primary border border-dark">Traducción Jurada</span>
       <span v-if="$route.path === '/alta'" class="col-1 mt-2 lapiz h5"
@@ -33,7 +52,7 @@ export default {
         <span class="col-2 bg-ligth border border-dark">{{
           servicio.idioma
         }}</span>
-        <span class="col-3 bg-ligth border border-dark">{{
+        <span class="col-2 bg-ligth border border-dark">{{
           servicio.tipoDocumento
         }}</span>
         <span class="col-2 bg-ligth border border-dark">{{
@@ -42,6 +61,18 @@ export default {
         <span class="col-2 bg-ligth border border-dark">{{
           convertirBooleano(servicio.traduccionJurada)
         }}</span>
+         <span v-if="$route.path === '/servicio'" class="col-1 mt-2">
+            <Button label="Ver" icon="pi pi-eye" @click="visible = true, empresaSeleccionada(empresa)"/>
+            <Dialog
+              v-model:visible="visible"
+              modal
+              header="Dartos de la empresa"
+              :style="{ width: '50vw' }"
+              :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+            >
+              <ComponenteEmpresa :empresaEntrada="empresaSeleccion" />
+            </Dialog>
+          </span>
         <span
           v-if="$route.path === '/interfazGestionServicios'"
           class="col-1 mt-2"
@@ -53,6 +84,7 @@ export default {
             icon="fa-solid fa-trash-arrow-up"
             size="2xl"
             style="color: #c01c28"
+             @click="eliminarServicio(servicio.id)"
           />
         </span>
       </div>
@@ -90,9 +122,10 @@ span {
 
 .lapiz {
   color: rgb(110, 60, 60);
-  padding-right: 0.5%;
 }
 .bin {
+  margin-left: 1vw;
+  cursor: pointer;
   margin-right: 1%;
 }
 @media (max-width: 768px) {

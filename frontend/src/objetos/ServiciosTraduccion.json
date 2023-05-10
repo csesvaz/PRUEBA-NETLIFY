@@ -1,0 +1,26 @@
+{
+    "_embedded" : {
+      "traductores" : [ {
+        "id" : 1,
+        "empresaTrad" : "Alfresco",
+        "idioma" : "ingles",
+        "tipoDocumento":"Carta",
+        "tiempoEntrega" : "1 mes",
+        "traduccionJurada" : true
+      }, {
+        "id" : 2,
+        "empresaTrad" : "Interlingua",
+        "idioma" : "frances",
+        "tipoDocumento":"Documento Oficial",
+        "tiempoEntrega" : "2 semanas",
+        "traduccionJurada" : true
+      },{
+        "id" : 3,
+        "empresaTrad" : "Interlingua",
+        "idioma" : "frances",
+        "tipoDocumento":"Documento Oficial",
+        "tiempoEntrega" : "2 semanas",
+        "traduccionJurada" : false
+      }]
+    }
+  }

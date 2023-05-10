@@ -1,59 +1,37 @@
 <script>
 import BarraNavegacion from "../components/BarraNavegacion.vue";
-import ComponenteEmpresa from "../components/ComponenteEmpresa.vue";
 import ComponentePregunta from "../components/ComponentePregunta.vue";
 import { mapState } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
 
 export default {
-  components: { BarraNavegacion, ComponenteEmpresa, ComponentePregunta },
-  computed: {
-    ...mapState(useEmpresaStore, ["empresas"]),
-  },
-  data() {
-    return {
-      empresaSelect: "Seleccione una empresa",
-    };
-  },
-  }
+  components: { BarraNavegacion, ComponentePregunta },
+}
 </script>
 
 <template>
   <div class="d-block fixed-top">
     <BarraNavegacion />
+  </div>
     <div class="contenedor">
       <br />
-      <div class="row">
+      <div class="row mt-3">
         <h3 class="IntroduccionAyuda">
-          Consulta de datos de Empresa de Servicios Lingüísticos
+          Preguntas más habituales de la aplicación TRADUCPOL.
         </h3>
       </div>
-      <div class="row">
-        <div class="col-2">
-          <select
-            class="form-select form-select-sm"
-            aria-label=".form-select-sm example"
-            v-model="empresaSelect"
-          >
-            <option disable selected="">Seleccione una empresa</option>
-            <option
-              v-for="empresa in empresas"
-              :key="empresa.id"
-              :value="empresa"
-            >
-              {{ empresa.nombre }}
-            </option>
-          </select>
-        </div>
-      </div>
     </div>
-    <ComponenteEmpresa :empresa="empresaSelect" />
-    <ComponentePregunta />
-  </div>
+      <ComponentePregunta/>
+
+  
 </template>
 <style scoped>
 .contenedor {
-  margin-bottom: 1em;
-  margin-left: 2em;
+  margin-bottom: 1vh;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  
 }
 </style>

@@ -2,87 +2,174 @@
 import Calendar from "primevue/calendar";
 import ComponenteIdiomas from "./ComponenteIdiomas.vue";
 import ComponenteProvincias from "./ComponenteProvincias.vue";
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
+import { mapState, mapActions } from "pinia";
+import { useEmpresaStore } from "../stores/EmpresaStore";
 export default {
-  components: { Calendar, ComponenteIdiomas, ComponenteProvincias },
+  components: {
+    Calendar,
+    ComponenteIdiomas,
+    ComponenteProvincias,
+    Button,
+    Dialog,
+  },
+
   data() {
     return {
-      time: null,
+      servicio: {
+        horaSeleccionada:
+          "Tue May 09 2023 23:48:28 GMT+0200 (hora de verano de Europa central)",
+        idioma: "",
+        provincia: "",
+        servicioOnline: false,
+
+      },
+      empresasConServicio: [],
+      mostrarModal: false,
+      visible: false,
     };
+  },
+  computed: {
+    ...mapState(useEmpresaStore, ["empresas"]),
+  },
+  methods: {
+    ...mapActions(useEmpresaStore, ["convertirHora", "convertirBooleano"]),
+    provincia(provinciaSeleccionada) {
+      this.servicio.provincia = provinciaSeleccionada;
+    },
+    idioma(idiomaSeleccionado) {
+      this.servicio.idioma = idiomaSeleccionado;
+    },
+    buscarEmpresas(servicio) {
+      this.empresasConServicio=[];
+      servicio=this.servicio;
+      this.visible = true;
+      this.empresas.forEach((empresa) => {
+    empresa.servicios.forEach((serv) => {
+      if (serv.tipo == "interpretacion" &&
+          serv.provincia == servicio.provincia &&
+          serv.idioma == servicio.idioma &&
+          ((servicio.servicioOnline == true) && (serv.servicioOnline == true)||(servicio.servicioOnline == false))) {
+
+        this.empresasConServicio.push(empresa);
+      }
+    });
+  });
+  return this.empresasConServicio;
+    },
+    updateServicioOnline() {
+    console.log(this.servicio.servicioOnline);
+  },
   },
 };
 </script>
 <template>
   <h3 class="formulario">Búsqueda de Servicio Lingüístico de Interpretación</h3>
-  <br />
-  <p>
-    1. Seleccione la hora a la que necesita el apoyo de Servicio Lingüístico de
-    Interpretación:
-  </p>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-3 col-md-3">
-      <div class="text-left">Hora*</div>
-    </div>
-    <div class="col-4 col-md-2">
-      <Calendar id="calendar-timeonly" v-model="time" timeOnly />
-    </div>
-    <div class="col-1 col-md-2"></div>
-  </div>
-
-  <br />
-  <p>
-    2. Seleccione la localización en la que necesita el apoyo de Servicio
-    Lingüítico.
-  </p>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-2">Provincia*</div>
-    <div class="col-1"></div>
-    <div class="col-9 col-md-8"><ComponenteProvincias selected="" /></div>
-  </div>
-
-  <br />
-  <p>3. Seleccione el idioma y el tipo de servicio que necesita.</p>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-2">Idioma*</div>
-  
-
-  <div class="col-1"></div>
-  <ComponenteIdiomas selected="" /></div>
-  <div class="row">
-    <div class="col-12 mt-4">
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value=""
-          id="flexCheckDefault"
+  <form @submit.prevent="buscarEmpresas">
+    <p>
+      1. Seleccione la hora a la que necesita el apoyo de Servicio Lingüístico
+      de Interpretación:
+    </p>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-3 col-md-3">
+        <div class="text-left">Hora*</div>
+      </div>
+      <div class="col-4 col-md-2">
+        <Calendar
+          id="calendar-timeonly"
+          v-model="servicio.horaSeleccionada"
+          required
+          timeOnly
         />
-        <label class="form-check-label" for="flexCheckDefault">
-          Selecciona si desea ver únicamente los servicios que tienen asistencia
-          Online.
-        </label>
+      </div>
+      <div class="col-1 col-md-2"></div>
+    </div>
+
+    <br />
+    <p>
+      2. Seleccione la localización en la que necesita el apoyo de Servicio
+      Lingüítico.
+    </p>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-2">Provincia*</div>
+      <div class="col-1"></div>
+      <div class="col-9 col-md-8">
+        <ComponenteProvincias @provinciaSeleccionada="provincia" required />
       </div>
     </div>
-  </div>
 
-  <br />
-  <p>
-    4. Una vez comprobado que tiene todos los campos obligatorios (Marcados con
-    *) rellenos seleccione el botón de Búsqueda.
-  </p>
-  <div class="row mt-4">
-    <div class="col-3"></div>
-    <div class="col-3 col-md-4">
-      <button type="button" class="btn btn-primary">Búsqueda</button>
+    <br />
+    <p>3. Seleccione el idioma y el tipo de servicio que necesita.</p>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <ComponenteIdiomas @idiomaSeleccionado="idioma" required />
     </div>
-  </div>
+    <div class="row">
+      <div class="col-12 mt-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="servicio.servicioOnline"
+            id="flexCheckDefault"
+            @change="updateServicioOnline"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Selecciona si desea ver únicamente los servicios que tienen
+            asistencia Online.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <p>
+      4. Una vez comprobado que tiene todos los campos obligatorios (Marcados
+      con *) rellenos seleccione el botón de Búsqueda.
+    </p>
+    <div class="row mt-4">
+      <div class="col-3"></div>
+      <div class="col-3 col-md-4">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          :disabled="
+            !servicio.provincia ||
+            !servicio.idioma ||
+            !servicio.horaSeleccionada
+          "
+        >
+          Búsqueda
+        </button>
+      </div>
+    </div>
+  </form>
+  <Dialog
+    v-model:visible="visible"
+    modal
+    header="Datos de las empresas que tienen ese servicio"
+    :style="{ width: '50vw' }"
+    :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
+  >
+    <p>Hora seleccionada: {{ servicio.horaSeleccionada }}</p>
+    <p>Provincia seleccionada: {{ servicio.provincia }}</p>
+    <p>Idioma seleccionado: {{ servicio.idioma }}</p>
+    <p>Servicio online: {{ convertirBooleano(servicio.servicioOnline) }}</p>
+    <p
+      v-if="empresasConServicio.length !== 0"
+      v-for="empresa in empresasConServicio"
+    >
+      {{ empresa.nombre }}
+    </p>
+  </Dialog>
 </template>
 
 <style scoped>
-h3{
-    margin-top: 7vh;
+h3 {
+  margin-top: 7vh;
 }
 @media (max-width: 576px) {
   p {
@@ -92,7 +179,6 @@ h3{
   h3 {
     text-align: center;
     margin-top: 4vh;
-
   }
 }
 </style>

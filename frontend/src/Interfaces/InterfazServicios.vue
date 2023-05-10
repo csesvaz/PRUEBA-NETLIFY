@@ -1,37 +1,31 @@
 <script>
 import BarraNavegacion from "../components/BarraNavegacion.vue";
-import ListadoServiciosInterpretacion from "../components/ListadoServiciosInterpretacion.vue";
-import ListadoServiciosTraduccion from "../components/ListadoServiciosTraduccion.vue";
+import ListadoServiciosInterpretacion2 from "../components/ListadoServiciosInterpretacion2.vue";
+import ListadoServiciosTraduccion2 from "../components/ListadoServiciosTraduccion2.vue";
 import { mapState, mapActions } from "pinia";
 import { useEmpresaStore } from "../stores/EmpresaStore";
 export default {
   components: {
     BarraNavegacion,
-    ListadoServiciosInterpretacion,
-    ListadoServiciosTraduccion,
+    ListadoServiciosInterpretacion2,
+    ListadoServiciosTraduccion2,
   },
   computed: {
     ...mapState(useEmpresaStore, ["opcionInicial"]),
   },
-  data() {
-    return {
-      filtro: "",
-    };
-  },
   methods: {
     ...mapActions(useEmpresaStore, ["cambioOpcion"]),
 
-    filtrar() {
-      this.filtro = this.$refs.busquedaEmpresa.value;
-    },
+
   },
 };
 </script>
 
 <template>
-  <div class="d-block fixed-top w-100">
+  <div class="d-block fixed-top">
     <BarraNavegacion />
-    <div class="container align-items-start">
+  </div>
+    <div class="container mt-3 align-items-start">
       <br />
       <h3 class="listado">
         Listado de todos los servicios lingüisticos disponibles:
@@ -68,33 +62,14 @@ export default {
       </div>
     </div>
     <br />
-    <div class="row mb-12">
-      <div class="col-1"></div>
-      <span class="col-4 busqueda"
-        ><form class="d-flex" role="search" @submit.prevent="filtrar">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Busqueda por empresa."
-            aria-label="search"
-            ref="busquedaEmpresa"
-          />
-          <button
-            class="btn btn-outline-info bg-primary btn Busqueda"
-            type="submit"
-          >
-            Buscar
-          </button>
-        </form>
-      </span>
-    </div>
+   
     <div v-if="this.opcionInicial">
-      <ListadoServiciosInterpretacion :filtrarServicio="filtro" />
+      <ListadoServiciosInterpretacion2/>
     </div>
     <div v-else>
-      <ListadoServiciosTraduccion :filtrarServicio="filtro" />
+      <ListadoServiciosTraduccion2/>
     </div>
-  </div>
+ 
 </template>
 
 <style scoped>
@@ -104,6 +79,12 @@ export default {
 }
 .form-check-label {
   justify-content: start;
+}
+:disabled{
+ background-color: blue;
+}
+:disabled+label {
+color: blue;
 }
 @media (max-width: 768px) {
   .container {

@@ -3,13 +3,15 @@ import './style.css'
 import App from './App.vue'
 import './scss/styles.scss'
 import router from './router/router.js'
-
+import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primevue/resources/primevue.min.css'
+import 'primeicons/primeicons.css'
 
 // Importar Pinia
 import { createPinia } from 'pinia'
 const pinia = createPinia()
 
-import firebase from './firebase/firebase.js'
+// import firebase from './firebase/firebase.js'
 
 import * as bootstrap from 'bootstrap'
 
@@ -23,11 +25,8 @@ library.add(fas);
 library.add(far);
 library.add(fab);
 
-// Importar PrimeVue
-import 'primevue/resources/themes/saga-blue/theme.css'
-import 'primevue/resources/primevue.min.css'
-import 'primeicons/primeicons.css'
 import PrimeVue from 'primevue/config'
+
 
 // Importar Firebase
 import { VueFire, VueFireDatabaseOptionsAPI, VueFireFirestoreOptionsAPI } from 'vuefire'

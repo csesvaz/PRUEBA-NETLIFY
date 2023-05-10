@@ -1,8 +1,19 @@
+<script>
+export default {
+
+  data() {
+    return {
+      provinciaSeleccionada: ''
+    };
+  },}
+</script>
+
 <template>
   <div class="col-8 col-md-4">
-    <select
+    <select v-model="provinciaSeleccionada"
       class="form-select form-select-sm"
       aria-label=".form-select-sm example"
+      @change="$emit('provinciaSeleccionada', provinciaSeleccionada)"
     >
       <option value="">Elige Provincia</option>
       <option value="Álava/Araba">Álava/Araba</option>

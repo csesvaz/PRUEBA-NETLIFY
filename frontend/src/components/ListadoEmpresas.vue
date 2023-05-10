@@ -7,17 +7,18 @@ export default {
   },
   methods: {
     ...mapActions(useEmpresaStore, ["deleteEmpresa"]),
-    
+
     eliminarEmpresa(id) {
       this.deleteEmpresa(id);
     },
   },
 };
-</script><template>
+</script>
+<template>
   <h3>Listado de todas las empresas disponibles</h3>
-  <div class="table-responsive ">
-    <table class="table table-bordered table-hover border border-dark ">
-      <thead class="thead-dark bg-primary ">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover border border-dark">
+      <thead class="thead-dark bg-primary">
         <tr>
           <th class="text-center">Nombre de la Empresa</th>
           <th class="text-center">Dirección</th>
@@ -34,7 +35,9 @@ export default {
           <td class="text-center">{{ empresa.telefono }}</td>
           <td class="text-center">{{ empresa.email }}</td>
           <td class="text-center">
-            <router-link :to="{name:'modificacionEmpresa',params:{id:empresa.id}}">
+            <router-link
+              :to="{ name: 'modificacionEmpresa', params: { id: empresa.id } }"
+            >
               <fa class="lapiz" icon="fa-solid fa-pencil-alt" size="lg" />
             </router-link>
           </td>
@@ -64,5 +67,17 @@ export default {
   margin-right: 1em;
   margin-top: 1vh;
   cursor: pointer;
+}
+@media (max-width: 768px) {
+  .table-responsive {
+
+    margin-left: -5vw;
+  
+    font-size: 2vw;
+  }
+  h3{
+    margin-left: -5vw;
+  }
+  
 }
 </style>

@@ -14,6 +14,7 @@ import AltaServicioTraduccion from "@/FormulariosAlta/AltaServicioTraduccion.vue
 import InterfazGestionEmpresa from "@/Interfaces/InterfazGestionEmpresa.vue";
 import InterfazGestionServicios from "@/Interfaces/InterfazGestionServicios.vue";
 import ModificacionServicioInterpretacion from "@/FormulariosAlta/ModificacionServicioInterpretacion.vue";
+import InterfazEmpresas from "@/Interfaces/InterfazEmpresas.vue";
 const routes = [
   {
     path: "/",
@@ -30,6 +31,10 @@ const routes = [
   {
     path: "/alta",
     component: Alta,
+  },
+  {
+    path: "/empresas",
+    component: InterfazEmpresas,
   },
   {
     path: "/ayuda",

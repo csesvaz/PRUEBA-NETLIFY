@@ -1,0 +1,29 @@
+{
+    "_embedded" : {
+      "interpretes" : [ {
+        "id" : 1,
+        "empresaInt" : "Alfresco",
+        "idioma" : "ingles",
+        "horarioInicio":"10:00",
+        "horarioFin" : "23:00",
+        "provincia" : "Zaragoza",
+        "servicioOnline" : true
+      },{   
+        "id" : 2,
+        "empresaInt" : "Traductin",
+        "idioma" : "ingles",
+        "horarioInicio":"11:00",
+        "horarioFin" : "22:00",
+        "provincia" : "Leon",
+        "servicioOnline" : false
+      },{
+        "id" : 3,
+        "empresaInt" : "Interlingua",
+        "idioma" : "frances",
+        "horarioInicio":"09:00",
+        "horarioFin" : "24:00",
+        "provincia" : "Teruel",
+        "servicioOnline" : false
+      }]
+    }
+  }
