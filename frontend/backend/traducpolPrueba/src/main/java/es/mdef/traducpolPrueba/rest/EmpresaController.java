@@ -1,5 +1,5 @@
 package es.mdef.traducpolPrueba.rest;
-
+import org.slf4j.Logger;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.CollectionModel;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import es.mdef.traducpolPrueba.TraducpolPruebaApplication;
 import es.mdef.traducpolPrueba.entidades.Empresa;
 import es.mdef.traducpolPrueba.repositorios.EmpresaRepositorio;
 
@@ -24,19 +26,21 @@ public class EmpresaController {
 	private final EmpresaAssembler assembler;
 	private final EmpresaListaAssembler listaAssembler;
 	private final ServicioListaAssembler servicioListaAssembler;
-
+	private final Logger log;
+	
 	EmpresaController(EmpresaRepositorio repositorio, EmpresaAssembler assembler,
 			EmpresaListaAssembler listaAssembler, ServicioListaAssembler servicioListaAssembler) {
 		this.repositorio = repositorio;
 		this.assembler = assembler;
 		this.listaAssembler = listaAssembler;
 		this.servicioListaAssembler = servicioListaAssembler;
+		this.log = TraducpolPruebaApplication.log;
 	}
 
 	@GetMapping("{id}")
 	public EmpresaModel one(@PathVariable Long id) {
 		Empresa empresa = repositorio.findById(id).orElseThrow();
-//		log.info("Recuperado " + empresa);
+		log.info("Recuperada " + empresa);
 		return assembler.toModel(empresa);
 	}
 
@@ -50,19 +54,19 @@ public class EmpresaController {
 		return CollectionModel.of(repositorio.findById(id).orElseThrow()
 						.getServicio().stream().map(servicio -> servicioListaAssembler.toModel(servicio))
 				.collect(Collectors.toList()),
-				linkTo(methodOn(EmpresaController.class).getServiciosEmpresa(id)).withSelfRel());
+				linkTo(methodOn(EmpresaController.class).one(id)).slash("servicios").withSelfRel());
 	}
 
 	@PostMapping
 	public EmpresaModel add(@RequestBody EmpresaModel model) {
 		Empresa Empresa = repositorio.save(assembler.toEntity(model));
-//		log.info("Añadido " + Empresa);
+		log.info("Añadida " + Empresa);
 		return assembler.toModel(Empresa);
 	}
 
 	@PutMapping("{id}")
 	public EmpresaModel edit(@PathVariable Long id, @RequestBody EmpresaModel model) {
-		Empresa usuario = repositorio.findById(id).map(ped -> {
+		Empresa empresa = repositorio.findById(id).map(ped -> {
 			ped.setNombre(model.getNombre());
 			ped.setDireccion(model.getDireccion());
 			ped.setTelefono(model.getTelefono());
@@ -71,13 +75,13 @@ public class EmpresaController {
 
 			return repositorio.save(ped);
 		}).orElseThrow();
-
-		return assembler.toModel(usuario);
+		log.info("Actualizado " + empresa);
+		return assembler.toModel(empresa);
 	}
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
-//		log.info("Borrado Empresa " + id);
+		log.info("Borrada empresa " + id);
 		repositorio.deleteById(id);
 	}
 

@@ -1,5 +1,6 @@
 package es.mdef.traducpolPrueba.rest;
 
+import org.slf4j.Logger;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.mdef.traducpolPrueba.TraducpolPruebaApplication;
 import es.mdef.traducpolPrueba.entidades.Servicio;
 import es.mdef.traducpolPrueba.entidades.ServicioTraduccion;
 import es.mdef.traducpolPrueba.repositorios.ServicioRepositorio;
 import es.mdef.traducpolPrueba.entidades.ServicioInterpretacion;
-
 
 @RestController
 @RequestMapping("/servicios")
@@ -22,18 +23,20 @@ public class ServicioController {
 	private final ServicioRepositorio repositorio;
 	private final ServicioAssembler assembler;
 	private final ServicioListaAssembler listaAssembler;
+	private final Logger log;
 
 	ServicioController(ServicioRepositorio repositorio, ServicioAssembler assembler,
 			ServicioListaAssembler listaAssembler) {
 		this.repositorio = repositorio;
 		this.assembler = assembler;
 		this.listaAssembler = listaAssembler;
+		this.log = TraducpolPruebaApplication.log;
 	}
 
 	@GetMapping("{id}")
 	public ServicioModel one(@PathVariable Long id) {
 		Servicio servicio = repositorio.findById(id).orElseThrow();
-//		log.info("Recuperado " + servicio);
+		log.info("Recuperado " + servicio);
 		return assembler.toModel(servicio);
 	}
 
@@ -44,9 +47,9 @@ public class ServicioController {
 
 	@PostMapping
 	public ServicioModel add(@RequestBody ServicioModel model) {
-		Servicio Servicio = repositorio.save(assembler.toEntity(model));
-//		log.info("Añadido " + Servicio);
-		return assembler.toModel(Servicio);
+		Servicio servicio = repositorio.save(assembler.toEntity(model));
+		log.info("Añadido " + servicio);
+		return assembler.toModel(servicio);
 	}
 
 	@PutMapping("{id}")
@@ -77,13 +80,13 @@ public class ServicioController {
 
 			return repositorio.save(ped);
 		}).orElseThrow();
-
+		log.info("Actualizado " + servicio);
 		return assembler.toModel(servicio);
 	}
 
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable Long id) {
-//		log.info("Borrado Servicio " + id);
+		log.info("Borrado Servicio " + id);
 		repositorio.deleteById(id);
 	}
 

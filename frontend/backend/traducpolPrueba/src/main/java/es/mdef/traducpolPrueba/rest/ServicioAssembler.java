@@ -33,7 +33,7 @@ public class ServicioAssembler implements RepresentationModelAssembler<Servicio,
 			((ServicioInterpretacion) servicio).setHorarioInicioServicio(model.getHorarioInicioServicio());
 			((ServicioInterpretacion) servicio).setHorarioFinServicio(model.getHorarioFinServicio());
 			((ServicioInterpretacion) servicio).setServicioOnline(model.isServicioOnline());
-			((ServicioTraduccion) servicio).setTipo(Tipo.interpretación);
+			((ServicioInterpretacion) servicio).setTipo(Tipo.interpretación);
 			break;
 		}
 		default:
@@ -72,10 +72,10 @@ public class ServicioAssembler implements RepresentationModelAssembler<Servicio,
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + entity.getTipo());
 		}
-		
 
-		model.add(linkTo(methodOn(ServicioController.class).one(entity.getId())).withSelfRel());
-//		model.add(linkTo(methodOn(EmpresaController.class).one(entity.getEmpresa().getId())).withRel("empresa"));
+		model.add(
+				linkTo(methodOn(ServicioController.class).one(entity.getId())).withSelfRel(),
+				linkTo(methodOn(EmpresaController.class).one(entity.getEmpresa().getId())).withRel("empresa"));
 
 		return model;
 	}
