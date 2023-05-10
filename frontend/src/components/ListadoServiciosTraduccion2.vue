@@ -156,7 +156,7 @@ export default {
       </Column>
       <template #footer>
         Hay un total de {{ servicios ? servicios.length : 0 }} servicios de
-        interpretación.
+        traducción.
       </template>
     </DataTable>
   </div>

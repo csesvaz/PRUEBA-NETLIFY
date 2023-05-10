@@ -32,7 +32,7 @@ export default {
         ofertados por las empresas, puedes sugerir la introducción del servicio.
         Para hacerlo, envía un mensaje a la dirección apoyoTraucpol@mmmm.com o
         llama al teléfono (+34 655-566778) y contactará con el servicio de
-        intérpretes (Horario telefónico de 9:00 a 15:00).
+        intérpretes y traductores (Horario telefónico de 9:00 a 15:00).
       </p>
     </template>
   </Card>
@@ -44,10 +44,10 @@ export default {
     <template #content>
       <p>
         En caso de que un servicio que se salga del horario fijado por la
-        empresa, en este caso existen dos posibilidades: 1 si el servicio
-        empieza dentro del horario marcado por al empresa, la empresa se
-        compromete a prestar el servicio. 2 Si el servicio solicitado empieza
-        fuera del horario de la empresa pero finaliza dentro, la empresa no
+        empresa existen dos posibilidades: La primera es que el servicio
+        empiece dentro del horario marcado por al empresa, la empresa se
+        compromete a prestar el servicio. El segundo caso es que el servicio solicitado empiece
+        fuera del horario de la empresa pero finalice dentro del horario, en este caso la empresa no
         prestará este servicio por lo que deberá contactar con otra empresa que
         si que preste servicio en dicho horario o contactar con el servicio
         central de interpretes enviando un mensaje a la dirección
@@ -65,7 +65,7 @@ export default {
       <p>
         Sí, no existen inconvenientes por parte de las empresas que dan apoyo a
         nuestras unidades policiales, siempre y cuando sea dentro del horario
-        ofertado para el sevricio Los apoyos de servicios de traducción nunca se
+        ofertado para el servicio. Los apoyos de servicios de traducción nunca se
         considerarán de urgencia.
       </p>
     </template>

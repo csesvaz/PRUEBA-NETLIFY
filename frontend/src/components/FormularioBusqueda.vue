@@ -65,7 +65,7 @@ export default {
 };
 </script>
 <template>
-  <h3 class="formulario">Búsqueda de Servicio Lingüístico de Interpretación</h3>
+  <h3 class="formulario">Búsqueda de Servicio Lingüístico de Interpretación.</h3>
   <form @submit.prevent="buscarEmpresas">
     <p>
       1. Seleccione la hora a la que necesita el apoyo de Servicio Lingüístico
@@ -153,23 +153,34 @@ export default {
     header="Datos de las empresas que tienen ese servicio"
     :style="{ width: '50vw' }"
     :breakpoints="{ '960px': '75vw', '641px': '100vw' }"
-  >
-    <p>Hora seleccionada: {{ servicio.horaSeleccionada }}</p>
-    <p>Provincia seleccionada: {{ servicio.provincia }}</p>
-    <p>Idioma seleccionado: {{ servicio.idioma }}</p>
-    <p>Servicio online: {{ convertirBooleano(servicio.servicioOnline) }}</p>
+  ><div v-if="empresasConServicio.length == 0" class="Not Found">
+    <p>No se ha encontrado ninguna empresa que cumpla sus requisitos. Puede contactar con el servicio
+        central de interpretes enviando un mensaje a la dirección
+        apoyoTraucpol@mmmm.com o llamando al teléfono +34 655-566778 (Horario
+        telefónico de 9:00 a 15:00)</p>
+  </div>
+  <div v-else>
+    <p>La hora seleccionada ha sido {{ servicio.horaSeleccionada }}</p>
+    <p>La provincia seleccionada ha sido {{ servicio.provincia }}</p>
+    <p>El idioma seleccionado ha sido {{ servicio.idioma }}</p>
+    <p>Necesidad de Servicio online ({{ convertirBooleano(servicio.servicioOnline) }})</p>
+    <p>Las empresas que cumplen sus requisitos son</p>
     <p
-      v-if="empresasConServicio.length !== 0"
+      
       v-for="empresa in empresasConServicio"
     >
-      {{ empresa.nombre }}
+     - {{ empresa.nombre }} con telefono {{ empresa.telefono }}, con dirección {{ empresa.direccion }}
     </p>
+   
+  
+  </div>
   </Dialog>
 </template>
 
 <style scoped>
 h3 {
   margin-top: 7vh;
+  margin-bottom: 2vh;
 }
 @media (max-width: 576px) {
   p {
